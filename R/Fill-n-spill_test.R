@@ -25,8 +25,13 @@ Cell_Water_Soil <- R6::R6Class(
     cellLength = NULL,
     #' @field cellPorosity The porosity of the soil cell.
     cellPorosity = NULL,
-    #' @field cellTortuosity The tortuosity of the soil cell.
-    cellTortuosity = NULL,
+    #' @field cellMatricPotential The matric potential of the soil cell.
+    cellMatricPotential = NULL,
+    #' @field cellSoilType The soil type of the soil cell.For notation only.
+    cellSoilType = NULL,
+    #' @field cellStorage The amount of water in storage within the soil cell.
+    cellStorage = NULL,
+
 
     #' @description Create a new water cell
     #' @param field_capacity The max volume of water that can be in the cell.
@@ -41,21 +46,25 @@ Cell_Water_Soil <- R6::R6Class(
     #' @param cellWidth The width of the soil cell.
     #' @param cellLength The length of the soil cell.
     #' @param cellPorosity The porosity of the soil cell.
-    #' @param cellTortuosity The tortuosity of the soil cell.
+    #' @param cellMatricPotential The matric potential of the soil cell.
+    #' @param cellSoilType The soil type of the soil cell. For notation only.
+    #' @param cellStorage The amount of water in storage within the soil cell.
     #' @return The object of class \code{Cell_Water_Soil}.
 
 
     initialize = function(...,field_capacity, waterVolume, cellLength, cellHeight, cellWidth,
-                          cellPorosity, cellTortuosity) {
+                          cellPorosity, cellMatricPotential, cellSoilType, cellStorage) {
 
       super$initialize(...)
       self$cellLength <- cellLength
       self$cellHeight <- cellHeight
       self$cellWidth <- cellWidth
       self$cellPorosity <- cellPorosity
-      self$cellTortuosity <- cellTortuosity
       self$waterVolume <- waterVolume
       self$cellVolume <- cellLength * cellWidth * cellHeight
+      self$cellMatricPotential <- cellMatricPotential
+      self$cellSoilType <- cellSoilType
+      self$cellStorage <- cellStorage
 
       self$field_capacity <- self$cellPorosity * self$cellLength * self$cellHeight * self$cellWidth
 
