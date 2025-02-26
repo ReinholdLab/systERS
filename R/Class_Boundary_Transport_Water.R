@@ -226,7 +226,8 @@ Boundary_Transport_Water_Soil <-
         residenceTime = NULL,
         #' @field storAgeSelection Distribution of water ages in a cell
         storAgeSelection = NULL,
-
+        #' @field poreWaterVelocity Velocity of water moving through pore spaces
+        poreWaterVelocity = NULL,
 
 
         #' @description Instantiate a water transport boundary in the soil processing domain
@@ -354,19 +355,19 @@ Boundary_Transport_Water_Soil <-
 
           if(!self$usModBound) { #looking at upstream cell
 
-            poreWaterVelocity <- self$discharge / (self$upstreamCell$cellPorosity *
+            self$poreWaterVelocity <- self$discharge / (self$upstreamCell$cellPorosity *
                                                      self$upstreamCell$cellHeight *
                                                      self$upstreamCell$cellWidth)
 
-            dispersionTransit <- self$upstreamCell$longitudinalDispersivity * poreWaterVelocity
+            dispersionTransit <- self$upstreamCell$longitudinalDispersivity * self$poreWaterVelocity
 
-            advectiveTransit <- self$upstreamCell$cellLength / poreWaterVelocity
+            advectiveTransit <- self$upstreamCell$cellLength / self$poreWaterVelocity
 
             self$transitTime <- advectiveTransit + (self$upstreamCell$cellLength^2 /
                                                       (2*dispersionTransit)) #dispersion transit time
 
             self$residenceTime <- (self$upstreamCell$cellLength * self$upstreamCell$cellHeight *
-                                     self$upstreamCell$cellWidth) / poreWaterVelocity
+                                     self$upstreamCell$cellWidth) / self$poreWaterVelocity
 
             self$storAgeSelection <- self$transitTime / self$residenceTime
 

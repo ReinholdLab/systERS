@@ -179,6 +179,8 @@ Boundary_Transport_Solute_Soil <-
         massSoluteInCell = NULL,
         #' @field fracMassSpillOver The fraction of mass of solute leaving the soil cell
         fracMassSpillOver = NULL,
+        #' @field soluteSAS SAS function for solutes
+        soluteSAS = NULL,
 
 
         #' @description Instantiate a transport boundary for solutes between
@@ -202,6 +204,17 @@ Boundary_Transport_Solute_Soil <-
 
 
           }, # close initialize
+
+        #' @description Calculate SAS for solutes
+        #' @method Method
+        #'   Boundary_Transport_Solutes$soluteSAS
+        #' @return Boundary spillover.
+        soluteSAS = function() {
+
+
+
+
+        }
 
 
 
