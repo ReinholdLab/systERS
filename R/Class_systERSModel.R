@@ -441,7 +441,8 @@ systERSModel <-
                 cellMinTemp = tbl$cellMinTemp[rowNum],
                 cellSolarRadiation = tbl$cellSolarRadiation[rowNum],
                 rootDepth = tbl$rootDepth[rowNum],
-                longitudinalDispersivity = tbl$longitudinalDispersivity[rowNum]
+                longitudinalDispersivity = tbl$longitudinalDispersivity[rowNum],
+                diffusiveCoefficient = tbl$diffusiveCoefficient[rowNum]
               )
             }
           ) # close llply

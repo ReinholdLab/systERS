@@ -244,6 +244,8 @@ Cell_Water_Soil <- R6::R6Class(
 
     #' @field longitudinalDispersivity Dispersivity provided by user
    longitudinalDispersivity = NULL,
+   #' @field diffusiveCoefficient Diffusivity provided by user
+   diffusiveCoefficient = NULL,
 
 
     #' @description Create a new water cell
@@ -278,7 +280,7 @@ Cell_Water_Soil <- R6::R6Class(
     initialize = function(..., cellLength, cellHeight, cellWidth, cellDepth,
                           cellSoilType, cellHydraulicConductivity,
                           cellMaxTemp, cellMinTemp, cellSolarRadiation, rootDepth,
-                          longitudinalDispersivity) {
+                          longitudinalDispersivity, diffusiveCoefficient) {
       super$initialize(...)
 
       self$cellLength <- cellLength
@@ -328,6 +330,7 @@ Cell_Water_Soil <- R6::R6Class(
       self$saturationVolume <- self$cellPorosity * self$cellVolume
       self$cellSpillOver <- 0
       self$longitudinalDispersivity <- longitudinalDispersivity
+      self$diffusiveCoefficient <- diffusiveCoefficient
 
     },
 

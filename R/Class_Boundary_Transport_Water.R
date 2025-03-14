@@ -355,19 +355,24 @@ Boundary_Transport_Water_Soil <-
 
           if(!self$usModBound) { #looking at upstream cell
 
+            #1D water transport approximation
+            #pore water velocity using a cross sectional area
             self$poreWaterVelocity <- self$discharge / (self$upstreamCell$cellPorosity *
                                                      self$upstreamCell$cellHeight *
-                                                     self$upstreamCell$cellWidth)
+                                                     self$upstreamCell$cellLength)
+
+            #Millington-Quirk Equation to estimate tortuosity for diffusive equation (denominator)
+            diffusiveTransit <- self$upstreamCell$diffusiveCoefficient / (self$upstreamCell$cellPorosity^(1/3))
 
             dispersionTransit <- self$upstreamCell$longitudinalDispersivity * self$poreWaterVelocity
 
-            advectiveTransit <- self$upstreamCell$cellLength / self$poreWaterVelocity
+            advectiveTransit <- self$upstreamCell$cellHeight / self$poreWaterVelocity
 
-            self$transitTime <- advectiveTransit + (self$upstreamCell$cellLength^2 /
-                                                      (2*dispersionTransit)) #dispersion transit time
+            self$transitTime <- advectiveTransit + (self$upstreamCell$cellHeight^2 /
+                                                      (2*(dispersionTransit+diffusiveTransit))) #dispersion and diffusive transit time
 
-            self$residenceTime <- (self$upstreamCell$cellLength * self$upstreamCell$cellHeight *
-                                     self$upstreamCell$cellWidth) / self$poreWaterVelocity
+            #residence time in 1D is the same as advective transport because can only use cross-sectional area
+            self$residenceTime <- self$upstreamCell$cellHeight / self$poreWaterVelocity
 
             self$storAgeSelection <- self$transitTime / self$residenceTime
 
