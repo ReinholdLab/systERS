@@ -209,12 +209,12 @@ Boundary_Transport_Solute_Soil <-
         #' @method Method
         #'   Boundary_Transport_Solutes$soluteSAS
         #' @return Boundary spillover.
-        soluteSAS = function() {
+        soluteSASCalc = function() {
+
+          #something
 
 
-
-
-        }
+        },
 
 
 
