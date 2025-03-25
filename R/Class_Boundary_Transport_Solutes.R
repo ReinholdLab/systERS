@@ -226,6 +226,48 @@ Boundary_Transport_Solute_Soil <-
             #mass balance check
             massDifference <- self$massSoluteInCell - self$fracMassSpillOver
             if(massDifference < 0) {
+              stop(print ("You are removing more solute from the cell then what it held originally."))
+            }
+          }
+
+
+
+          #Ja = q * C. 9.1 Solute Transport. Use eq for advective solute transport. Need solute concentration and water flux..
+          #How to get data from Boundary_Transport_Water here in Boundary_Transport_Solutes?
+          #Pore water velocity here too? Pull in from Boundary_Transport_Water
+          #
+
+          concentrationAdvectionDispersionEq = function() {
+
+            substep <- 0.1
+            #pore water velocity?
+            poreVelocity <- self$upstreamCell$discharge / (self$upstreamCell$cellPorosity *
+                                                                 self$upstreamCell$cellHeight *
+                                                                 self$upstreamCell$cellWidth)
+
+            advection <- -poreVelocity * (self$upstreamCell$concentration[i+1] - self$upstreamcell$concentration[i-1] / (2 * substep))
+            dispersion <- self$upstreamCell$longitudinalDispersivity * (self$upstreamCell$concentration[i+1] - 2*self$upstreamCell$concentration + self$upstreamCell$concentration[i-1] / substep^2)
+
+
+          }
+
+
+
+          if(!self$usModBound) {
+
+
+
+            #initial volume and mass
+            totalVolume <- self$upstreamCell$linkedCell$waterVolume
+            self$massSoluteInCell <- self$upstreamCell$concentration*totalVolume *0.90 #90% of solute concentration moving from what is in cell
+
+            #mass and volume leaving cell
+            volumeSpillOver <- self$upstreamCell$linkedCell$cellSpillOver
+            self$fracMassSpillOver <- (volumeSpillOver/totalVolume) * self$massSoluteInCell
+
+            #mass balance check
+            massDifference <- self$massSoluteInCell - self$fracMassSpillOver
+            if(massDifference < 0) {
               stop(print ("You are removing more solute from the cell then what it held origianlly."))
             }
           }

@@ -226,12 +226,8 @@ Boundary_Transport_Water_Soil <-
         transitTime = NULL,
         #' @field populateDependencies Updates input and spillOver between upstream and downstream cells.
         populateDependencies = NULL,
-        #' @field populateDependencies Updates input and spillOver between upstream and downstream cells
-        populateDependencies = NULL,
         #' @field tradeType Type of trade calculation used for soil cells. spillOver, etc.
         tradeType = NULL,
-        #' @field transitTime Amount of time it takes for water to exit a cell
-        transitTime = NULL,
         #' @field residenceTime Amount of time water resides in a cell
         residenceTime = NULL,
         #' @field storAgeSelection Distribution of water ages in a cell
