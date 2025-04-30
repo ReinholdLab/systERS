@@ -237,18 +237,18 @@ Boundary_Transport_Solute_Soil <-
           #Pore water velocity here too? Pull in from Boundary_Transport_Water
           #
 
-          concentrationAdvectionDispersionEq = function() {
+          AdvectionDispersionEq = function() {
 
-            substep <- 0.1
-            #pore water velocity?
-            poreVelocity <- self$upstreamCell$discharge / (self$upstreamCell$cellPorosity *
-                                                                 self$upstreamCell$cellHeight *
-                                                                 self$upstreamCell$cellWidth)
+            hydrodynamicDispersion <- effectiveDiffusionCoeff + mechanicalDispersionCoeff
 
-            advection <- -poreVelocity * (self$upstreamCell$concentration[i+1] - self$upstreamcell$concentration[i-1] / (2 * substep))
-            dispersion <- self$upstreamCell$longitudinalDispersivity * (self$upstreamCell$concentration[i+1] - 2*self$upstreamCell$concentration + self$upstreamCell$concentration[i-1] / substep^2)
+            advection <- self$upstreamCell$cellPorosity * self$upstreamCell$poreWaterVelocity * self$upstreamCell$concentration
+            dispersion <- -hydrodynamicDispersion * (self$upstreamCell$concentration / self$upstreamCell$height)
+
+            oneDimensionalADE <- advection + dispersion
 
 
+
+            return(oneDimensionalADE)
           }
 
 

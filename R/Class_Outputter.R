@@ -130,6 +130,7 @@ Outputter <-
         #'   results.
         #' @return Graph
         timeSeriesGraph = function(systERSobject, attributeName, outputFilePathAndName){
+
           browser()
            plotDat <- read.csv(outputFilePathAndName, head = TRUE)
           theField <- objects(systERSobject)[grepl("(boundaryIdx|cellIdx)", objects(systERSobject))]
